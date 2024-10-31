@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:400,700" rel="stylesheet">
     <link href='style.css' rel='stylesheet' type='text/css'>
@@ -5,12 +6,13 @@
     <link rel="icon" type="x-icon" href="../icons/12axes.png">
     <link rel="shortcut icon" type="x-icon" href="../icons/12axes.png">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<body>
+<body lang="en">
     <script type="application/javascript"
             src="questions.js">
     </script>
-    <h1>Placeholder Name</h1>
+    <h1>Political Zone Compass Test</h1>
     <hr>
     <h2 style="text-align:center;" id="question-number">Loading...</h2>
     <p class="question" id="question-text"></p>
@@ -24,31 +26,33 @@
     <button class="small_button" onclick="prev_question()" id="back_button">Previous</button>
     <button class="small_button_off" id="back_button_off">Previous</button><br>
     <script>
-        var scores = {
-            autocracy: 0,
-            militarism: 0,
-            isolationism: 0,
-            assimilation: 0,
-            religious_state: 0,
-            conservatism: 0,
-            exclusion: 0,
-            global_trade: 0,
-            markets: 0,
-            private_property: 0,
-            federalism: 0,
-            freedom: 0,
-            democracy: 0,
-            pacifism: 0,
-            interventionism: 0,
-            multiculturalism: 0,
-            secularism: 0,
-            progress: 0,
-            inclusion: 0,
-            protectionism: 0,
-            planned_economy: 0,
-            unitarianism: 0,
-            security: 0,
-        };
+        // var scores = {
+        //     autocracy: 0,
+        //     militarism: 0,
+        //     isolationism: 0,
+        //     assimilation: 0,
+        //     religious_state: 0,
+        //     conservatism: 0,
+        //     exclusion: 0,
+        //     global_trade: 0,
+        //     markets: 0,
+        //     private_property: 0,
+        //     federalism: 0,
+        //     freedom: 0,
+        //     democracy: 0,
+        //     pacifism: 0,
+        //     interventionism: 0,
+        //     multiculturalism: 0,
+        //     secularism: 0,
+        //     progress: 0,
+        //     inclusion: 0,
+        //     protectionism: 0,
+        //     planned_economy: 0,
+        //     collectivism: 0,
+        //     unitarianism: 0,
+        //     security: 0,
+        // };
+        var scores = [0]*24;
         var qn = 0; // Question number
         var answers = [];
         var quests = [];
@@ -57,8 +61,9 @@
     
         function init_all_questions(qs) {
             //1,2,3,-2,-4
-            for(var i = 0; i < 12; i++) //Number of Axes
+            for(var i = 0; i < 24; i++) //Number of Axes
             {
+                console.log(questions[i]==undefined)
                 for(var  j = 0; j < questions[i].length; j++)
                 {
                     for(var k = 0; k < questions[i][j].length; k++)
@@ -72,10 +77,10 @@
         }
     
         function init_question() {
-            var ax = quests[qn][0];
+            var axis = quests[qn][0];
             var rate = quests[qn][1];
             var num = quests[qn][2];
-            document.getElementById("question-text").innerHTML = questions[ax][rate][num];
+            document.getElementById("question-text").innerHTML = questions[axis][rate][num];
             document.getElementById("question-number").innerHTML = "Question " + (qn + 1) + " of " + (quests.length);
             if (qn == 0) {
                 document.getElementById("back_button").style.display = 'none';
@@ -107,10 +112,10 @@
         }
     
         function next_question(mult) {
-            var ax = quests[qn][0];
+            var axis = quests[qn][0];
             var rate = quests[qn][1];
             var num = quests[qn][2];
-            scores[ax] += mult*(rate<4?1:-1);
+            scores[axis] += mult*(rate<4?1:-1);
     
             answers[qn] = mult;
             qn++;
@@ -125,10 +130,10 @@
                 return;
             }
             qn--;
-            var ax = quests[qn][0];
+            var axis = quests[qn][0];
             var rate = quests[qn][1];
             var num = quests[qn][2];
-            scores[ax] -= answers[qn]*(rate<4?1:-1);
+            scores[axis] -= answers[qn]*(rate<4?1:-1);
             init_question();
         }
         function calc_score(score) {
@@ -156,7 +161,8 @@
                 + `&r=${calc_score(scores[5])}`
                 + `&u=${calc_score(scores[6])}`
                 + `&v=${calc_score(scores[7])}`
-                + `&w=${calc_score(scores[8])}`;
+                + `&w=${calc_score(scores[8])}`
+                + `&x=${calc_score(scores[8])}`;
         }
     </script>
 </body>
